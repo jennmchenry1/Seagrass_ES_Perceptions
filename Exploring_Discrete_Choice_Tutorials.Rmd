@@ -1,0 +1,49 @@
+---
+title: "Exploring_Discrete_Choice_Code"
+author: "Jenn_McHenry"
+date: "7/29/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(AER)
+library(mlogit)
+
+```
+
+## Discrete Choice Tutorial 
+https://rpubs.com/sallychen/313125
+
+```{r cars}
+data("TravelMode", package = "AER")
+
+#checking out what the data looks like
+summary(TravelMode)
+head(TravelMode)
+
+#checking for NAs
+table(is.na(TravelMode))
+
+table(filter(TravelMode, choice=="yes")$mode)/(nrow(TravelMode)/4)
+
+
+# formatting data for mlogit
+TM <- mlogit.data(TravelMode, choice = "choice", shape = "long", 
+                  chid.var = "individual", alt.var = "mode", drop.index = TRUE)
+head(TM)
+
+
+# estimate with mlogit
+ml.TM <- mlogit(choice ~ gcost +wait +travel, TM, reflevel = "car")
+#show results
+summary(ml.TM)
+
+# how the predictions matc with actual outcomes
+apply(fitted(ml.TM, outcome=FALSE), 2, mean) # fitted mean choice probability
+
+ml.TM$freq/sum( ml.TM$freq) # mean choice probability in data
+```
+
+
