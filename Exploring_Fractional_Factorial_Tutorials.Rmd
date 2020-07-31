@@ -7,19 +7,21 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(FrF2)
 ```
 
-## Tutorial 1
-https://rstudio-pubs-static.s3.amazonaws.com/234395_fcc9534d6bea4c5fb37fb38557d33194.html
 
-```{r cars}
-
-```
-
-## Tutorial 2
+## Tutorial
 https://www.r-bloggers.com/fractional-factorial-designs-using-frf2/
 
 ```{r cars}
-summary(cars)
+
+
+ES_Trial=FrF2(2^4,alias.block.2fis=TRUE, 
+              factor.names = list(Alternate_Habitat=c("Coral","Mangroves"),
+              Biodiversity="", Nursery="", Shoreline_Protection="", Carbon_Storage="", Recreational_Fishing="", Commercial_Fishing="",Boating_Navigation="",Swimming_Snorkeling="",Diving_Tourism=""), default.levels = c("0","1"))
+
+
 ```
 
